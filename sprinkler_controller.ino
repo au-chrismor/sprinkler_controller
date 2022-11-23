@@ -600,6 +600,21 @@ void WriteSchedToEEPROM() {
     Serial.print("WriteSchedToEEPROM(): Block write starts at ");
     Serial.println(loc);
 #endif
+    EEPROM.put(loc, sched[i]);
+  }
+}
+
+/*
+void WriteSchedToEEPROM() {
+  unsigned int i = 0;
+  unsigned int loc = 0;
+
+  for(i = 0; i < 16; i++) {
+    loc = 0 + (i * sizeof(struct schedule));
+#ifdef _DEBUG
+    Serial.print("WriteSchedToEEPROM(): Block write starts at ");
+    Serial.println(loc);
+#endif
     EEPROM.update(loc, sched[i].slot0000);
     loc++;
     EEPROM.update(loc, sched[i].slot0015);
@@ -795,7 +810,23 @@ void WriteSchedToEEPROM() {
   }
   SetScheduleFlag();
 }
+*/
 
+void ReadSchedFromEEPROM() {
+  unsigned int i = 0;
+  unsigned int loc = 0;
+
+  for(i = 0; i < 16; i++) {
+    loc = 0 + (i * sizeof(struct schedule));
+#ifdef _DEBUG
+    Serial.print("ReadSchedFromEEPROM(): Block read starts at ");
+    Serial.println(loc);
+#endif
+    EEPROM.get(loc, sched[i]);
+  }
+}
+
+/*
 void ReadSchedFromEEPROM() {
   unsigned int i = 0;
   unsigned int loc = 0;
@@ -1000,6 +1031,7 @@ void ReadSchedFromEEPROM() {
     loc++;
   }
 }
+*/
 
 unsigned long CheckTime() {
   const unsigned long seventyYears = 2208988800UL;
