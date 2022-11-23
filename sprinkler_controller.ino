@@ -183,6 +183,8 @@ void ZeroEEPROM() {
 
 void CheckSchedule() {
   unsigned char ControlSegment = 0xFF;
+  int i = 0;
+  
 #ifdef _DEBUG
   Serial.println("In CheckSchedule");
 #endif
@@ -199,180 +201,184 @@ void CheckSchedule() {
 #ifdef _DEBUG
       Serial.println("Time to run a schedule");
 #endif
-      switch(hours) {
-        case 0:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0000;
+    for(i = 0; i < 16; i++) {
+        switch(hours) {
+          case 0:
+            if(minutes == 0) {
+              ControlSegment = sched[i].slot0000;
+            }
+            else {
+              ControlSegment = sched[i].slot0030;
+            }
+          case 1:
+            if(minutes == 0) {
+              ControlSegment = sched[i].slot0100;
+            }
+            else {
+              ControlSegment = sched[i].slot0130;
+            }
+          case 2:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0200;
+            }
+            else {
+              ControlSegment = sched[1].slot0230;
+            }
+          case 3:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0300;
+            }
+            else {
+              ControlSegment = sched[1].slot0330;
+            }
+          case 4:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0400;
+            }
+            else {
+              ControlSegment = sched[1].slot0430;
+            }
+          case 5:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0500;
+            }
+            else {
+              ControlSegment = sched[1].slot0530;
+            }
+          case 6:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0600;
+            }
+            else {
+              ControlSegment = sched[1].slot0630;
+            }
+          case 7:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0700;
+            }
+            else {
+              ControlSegment = sched[1].slot0730;
+            }
+          case 8:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0800;
+            }
+            else {
+              ControlSegment = sched[1].slot0830;
+            }
+          case 9:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0900;
+            }
+            else {
+              ControlSegment = sched[1].slot0930;
+            }
+          case 10:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1000;
+            }
+            else {
+              ControlSegment = sched[1].slot1030;
+            }
+          case 11:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1100;
+            }
+            else {
+              ControlSegment = sched[1].slot1130;
+            }
+          case 12:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1200;
+            }
+            else {
+              ControlSegment = sched[1].slot1230;
+            }
+          case 13:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1300;
+            }
+            else {
+              ControlSegment = sched[1].slot1330;
+            }
+          case 14:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot0400;
+            }
+            else {
+              ControlSegment = sched[1].slot0430;
+            }
+          case 15:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1500;
+            }
+            else {
+              ControlSegment = sched[1].slot1530;
+            }
+          case 16:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1600;
+            }
+            else {
+              ControlSegment = sched[1].slot1630;
+            }
+          case 17:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1700;
+            }
+            else {
+              ControlSegment = sched[1].slot1730;
+            }
+          case 18:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1800;
+            }
+            else {
+              ControlSegment = sched[1].slot1830;
+            }
+          case 19:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot1900;
+            }
+            else {
+              ControlSegment = sched[1].slot1930;
+            }
+          case 20:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot2000;
+            }
+            else {
+              ControlSegment = sched[1].slot2030;
+            }
+          case 21:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot2100;
+            }
+            else {
+              ControlSegment = sched[1].slot2130;
+            }
+          case 22:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot2200;
+            }
+            else {
+              ControlSegment = sched[1].slot2230;
+            }
+          case 23:
+            if(minutes == 0) {
+              ControlSegment = sched[1].slot2300;
+            }
+            else {
+              ControlSegment = sched[1].slot2330;
+            }
           }
-          else {
-            ControlSegment = sched[0].slot0030;
-          }
-        case 1:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0100;
-          }
-          else {
-            ControlSegment = sched[0].slot0130;
-          }
-        case 2:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0200;
-          }
-          else {
-            ControlSegment = sched[0].slot0230;
-          }
-        case 3:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0300;
-          }
-          else {
-            ControlSegment = sched[0].slot0330;
-          }
-        case 4:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0400;
-          }
-          else {
-            ControlSegment = sched[0].slot0430;
-          }
-        case 5:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0500;
-          }
-          else {
-            ControlSegment = sched[0].slot0530;
-          }
-        case 6:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0600;
-          }
-          else {
-            ControlSegment = sched[0].slot0630;
-          }
-        case 7:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0700;
-          }
-          else {
-            ControlSegment = sched[0].slot0730;
-          }
-        case 8:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0800;
-          }
-          else {
-            ControlSegment = sched[0].slot0830;
-          }
-        case 9:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0900;
-          }
-          else {
-            ControlSegment = sched[0].slot0930;
-          }
-        case 10:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1000;
-          }
-          else {
-            ControlSegment = sched[0].slot1030;
-          }
-        case 11:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1100;
-          }
-          else {
-            ControlSegment = sched[0].slot1130;
-          }
-        case 12:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1200;
-          }
-          else {
-            ControlSegment = sched[0].slot1230;
-          }
-        case 13:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1300;
-          }
-          else {
-            ControlSegment = sched[0].slot1330;
-          }
-        case 14:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot0400;
-          }
-          else {
-            ControlSegment = sched[0].slot0430;
-          }
-        case 15:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1500;
-          }
-          else {
-            ControlSegment = sched[0].slot1530;
-          }
-        case 16:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1600;
-          }
-          else {
-            ControlSegment = sched[0].slot1630;
-          }
-        case 17:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1700;
-          }
-          else {
-            ControlSegment = sched[0].slot1730;
-          }
-        case 18:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1800;
-          }
-          else {
-            ControlSegment = sched[0].slot1830;
-          }
-        case 19:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot1900;
-          }
-          else {
-            ControlSegment = sched[0].slot1930;
-          }
-        case 20:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot2000;
-          }
-          else {
-            ControlSegment = sched[0].slot2030;
-          }
-        case 21:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot2100;
-          }
-          else {
-            ControlSegment = sched[0].slot2130;
-          }
-        case 22:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot2200;
-          }
-          else {
-            ControlSegment = sched[0].slot2230;
-          }
-        case 23:
-          if(minutes == 0) {
-            ControlSegment = sched[0].slot2300;
-          }
-          else {
-            ControlSegment = sched[0].slot2330;
-          }
-      }
 #ifdef _DEBUG
-      Serial.print("Control Segment = 0x");
+      Serial.print("Control Segment[");
+      Serial.print(i);
+      Serial.print("]= 0x");
       Serial.println(ControlSegment, HEX);
 #endif  
+      }
     }
 #ifdef _DEBUG
   else
