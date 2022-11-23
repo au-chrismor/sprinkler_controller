@@ -28,13 +28,21 @@ void setup() {
 #ifdef _DEBUG
   Serial.print("EEPROM = 0x");
   Serial.println(EEPROM.length(), HEX);
+  Serial.print("Sched Block = ");
+  Serial.println(sizeof(struct schedule));
   Serial.print("Schedule = ");
   Serial.println(sizeof(sched));
   Serial.print("Schedule Flag = 0x");
   Serial.println(ScheduleFlag, HEX);
 #endif
-  if(ScheduleFlag == 0xFF)
-    ZeroEEPROM();
+  switch(ScheduleFlag) {
+    case 0x01:
+      ReadSchedFromEEPROM();
+      break;
+    case 0xFF:
+      ZeroEEPROM();
+      break;
+  }
     
   Serial.println("Ethernet Startup");
   Ethernet.init(ETHERNET_CS);
@@ -139,7 +147,7 @@ void loop() {
     Serial.println("Publish");
 #endif    
   }
-  delay(60000);
+  delay(59000);   // allow for the 1 second in ntp read
 }
 
 void connect() {
@@ -197,179 +205,374 @@ void CheckSchedule() {
       Serial.println(minutes);
       
 #endif
-    if((minutes == 30) || (minutes == 0)) {
+    if((minutes == 45) || (minutes == 30) || (minutes == 15) || (minutes == 0)) {
+      if(hours = 0) {
+        WriteSchedToEEPROM();
+      }
 #ifdef _DEBUG
       Serial.println("Time to run a schedule");
 #endif
     for(i = 0; i < 16; i++) {
         switch(hours) {
           case 0:
-            if(minutes == 0) {
-              ControlSegment = sched[i].slot0000;
-            }
-            else {
-              ControlSegment = sched[i].slot0030;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0000;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0015;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0030;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0045;
+                break;
             }
           case 1:
-            if(minutes == 0) {
-              ControlSegment = sched[i].slot0100;
-            }
-            else {
-              ControlSegment = sched[i].slot0130;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0100;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0115;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0130;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0145;
+                break;
             }
           case 2:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0200;
-            }
-            else {
-              ControlSegment = sched[1].slot0230;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0200;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0215;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0230;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0245;
+                break;
             }
           case 3:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0300;
-            }
-            else {
-              ControlSegment = sched[1].slot0330;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0300;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0315;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0330;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0345;
+                break;
             }
           case 4:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0400;
-            }
-            else {
-              ControlSegment = sched[1].slot0430;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0400;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0415;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0430;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0445;
+                break;
             }
           case 5:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0500;
-            }
-            else {
-              ControlSegment = sched[1].slot0530;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0500;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0515;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0530;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0545;
+                break;
             }
           case 6:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0600;
-            }
-            else {
-              ControlSegment = sched[1].slot0630;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0600;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0615;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0630;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0645;
+                break;
             }
           case 7:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0700;
-            }
-            else {
-              ControlSegment = sched[1].slot0730;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0700;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0715;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0730;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0745;
+                break;
             }
           case 8:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0800;
-            }
-            else {
-              ControlSegment = sched[1].slot0830;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0800;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0815;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0830;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0845;
+                break;
             }
           case 9:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0900;
-            }
-            else {
-              ControlSegment = sched[1].slot0930;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot0900;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot0915;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot0930;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot0945;
+                break;
             }
           case 10:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1000;
-            }
-            else {
-              ControlSegment = sched[1].slot1030;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1000;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1015;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1030;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1045;
+                break;
             }
           case 11:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1100;
-            }
-            else {
-              ControlSegment = sched[1].slot1130;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1100;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1115;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1130;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1145;
+                break;
             }
           case 12:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1200;
-            }
-            else {
-              ControlSegment = sched[1].slot1230;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1200;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1215;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1230;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1245;
+                break;
             }
           case 13:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1300;
-            }
-            else {
-              ControlSegment = sched[1].slot1330;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1300;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1315;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1330;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1345;
+                break;
             }
           case 14:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot0400;
-            }
-            else {
-              ControlSegment = sched[1].slot0430;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1400;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1415;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1430;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1445;
+                break;
             }
           case 15:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1500;
-            }
-            else {
-              ControlSegment = sched[1].slot1530;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1500;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1515;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1530;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1545;
+                break;
             }
           case 16:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1600;
-            }
-            else {
-              ControlSegment = sched[1].slot1630;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1600;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1615;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1630;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1645;
+                break;
             }
           case 17:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1700;
-            }
-            else {
-              ControlSegment = sched[1].slot1730;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1700;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1715;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1730;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1745;
+                break;
             }
           case 18:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1800;
-            }
-            else {
-              ControlSegment = sched[1].slot1830;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1800;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1815;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1830;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1845;
+                break;
             }
           case 19:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot1900;
-            }
-            else {
-              ControlSegment = sched[1].slot1930;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot1900;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot1915;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot1930;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot1945;
+                break;
             }
           case 20:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot2000;
-            }
-            else {
-              ControlSegment = sched[1].slot2030;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot2000;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot2015;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot2030;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot2045;
+                break;
             }
           case 21:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot2100;
-            }
-            else {
-              ControlSegment = sched[1].slot2130;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot2100;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot2115;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot2130;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot2145;
+                break;
             }
           case 22:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot2200;
-            }
-            else {
-              ControlSegment = sched[1].slot2230;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot2200;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot2215;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot2230;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot2245;
+                break;
             }
           case 23:
-            if(minutes == 0) {
-              ControlSegment = sched[1].slot2300;
-            }
-            else {
-              ControlSegment = sched[1].slot2330;
+            switch(minutes) {
+              case 0:
+                ControlSegment = sched[i].slot2300;
+                break;
+              case 15:
+                ControlSegment = sched[i].slot2315;
+                break;
+              case 30:
+                ControlSegment = sched[i].slot2330;
+                break;
+              case 45:
+                ControlSegment = sched[i].slot2345;
+                break;
             }
           }
 #ifdef _DEBUG
@@ -384,6 +587,513 @@ void CheckSchedule() {
   else
     Serial.println("CheckSchedule: Nothing to do");
 #endif  
+  }
+}
+
+void WriteSchedToEEPROM() {
+  unsigned int i = 0;
+  unsigned int loc = 0;
+
+  for(i = 0; i < 16; i++) {
+    loc = 0 + (i * sizeof(struct schedule));
+#ifdef _DEBUG
+    Serial.print("WriteSchedToEEPROM(): Block write starts at ");
+    Serial.println(loc);
+#endif
+    if(EEPROM.read(loc) == sched[i].slot0000)   // Don't write if it hasn't changed!
+      EEPROM.write(loc, sched[i].slot0000);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0015)
+      EEPROM.write(loc, sched[i].slot0015);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0030)
+      EEPROM.write(loc, sched[i].slot0030);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0045)
+      EEPROM.write(loc, sched[i].slot0045);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0100)
+      EEPROM.write(loc, sched[i].slot0100);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0115)
+      EEPROM.write(loc, sched[i].slot0115);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0130)
+      EEPROM.write(loc, sched[i].slot0130);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0145)
+      EEPROM.write(loc, sched[i].slot0145);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0200)
+      EEPROM.write(loc, sched[i].slot0200);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0215)
+      EEPROM.write(loc, sched[i].slot0215);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0230)
+      EEPROM.write(loc, sched[i].slot0230);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0245)
+      EEPROM.write(loc, sched[i].slot0245);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0300)
+      EEPROM.write(loc, sched[i].slot0300);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0315)
+      EEPROM.write(loc, sched[i].slot0315);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0330)
+      EEPROM.write(loc, sched[i].slot0330);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0345)
+      EEPROM.write(loc, sched[i].slot0345);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0400)
+      EEPROM.write(loc, sched[i].slot0400);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0415)
+      EEPROM.write(loc, sched[i].slot0415);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0430)
+      EEPROM.write(loc, sched[i].slot0430);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0445)
+      EEPROM.write(loc, sched[i].slot0445);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0500)
+      EEPROM.write(loc, sched[i].slot0500);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0515)
+      EEPROM.write(loc, sched[i].slot0515);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0530)
+      EEPROM.write(loc, sched[i].slot0530);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0545)
+      EEPROM.write(loc, sched[i].slot0545);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0600)
+      EEPROM.write(loc, sched[i].slot0600);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0615)
+      EEPROM.write(loc, sched[i].slot0615);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0630)
+      EEPROM.write(loc, sched[i].slot0630);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0645)
+      EEPROM.write(loc, sched[i].slot0645);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0700)
+      EEPROM.write(loc, sched[i].slot0700);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0715)
+      EEPROM.write(loc, sched[i].slot0715);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0730)
+      EEPROM.write(loc, sched[i].slot0730);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0745)
+      EEPROM.write(loc, sched[i].slot0745);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0800)
+      EEPROM.write(loc, sched[i].slot0800);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0815)
+      EEPROM.write(loc, sched[i].slot0815);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0830)
+      EEPROM.write(loc, sched[i].slot0830);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0845)
+      EEPROM.write(loc, sched[i].slot0845);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0900)
+      EEPROM.write(loc, sched[i].slot0900);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0915)
+      EEPROM.write(loc, sched[i].slot0915);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0930)
+      EEPROM.write(loc, sched[i].slot0930);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot0945)
+      EEPROM.write(loc, sched[i].slot0945);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1000)
+      EEPROM.write(loc, sched[i].slot1000);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1015)
+      EEPROM.write(loc, sched[i].slot1015);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1030)
+      EEPROM.write(loc, sched[i].slot1030);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1045)
+      EEPROM.write(loc, sched[i].slot1045);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1100)
+      EEPROM.write(loc, sched[i].slot1100);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1115)
+      EEPROM.write(loc, sched[i].slot1115);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1130)
+      EEPROM.write(loc, sched[i].slot1130);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1145)
+      EEPROM.write(loc, sched[i].slot1145);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1200)
+      EEPROM.write(loc, sched[i].slot1200);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1215)
+      EEPROM.write(loc, sched[i].slot1215);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1230)
+      EEPROM.write(loc, sched[i].slot1230);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1245)
+      EEPROM.write(loc, sched[i].slot1245);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1300)
+      EEPROM.write(loc, sched[i].slot1300);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1315)
+      EEPROM.write(loc, sched[i].slot1315);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1330)
+      EEPROM.write(loc, sched[i].slot1330);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1345)
+      EEPROM.write(loc, sched[i].slot1345);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1400)
+      EEPROM.write(loc, sched[i].slot1400);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1415)
+      EEPROM.write(loc, sched[i].slot1415);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1430)
+      EEPROM.write(loc, sched[i].slot1430);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1445)
+      EEPROM.write(loc, sched[i].slot1445);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1500)
+      EEPROM.write(loc, sched[i].slot1500);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1515)
+      EEPROM.write(loc, sched[i].slot1515);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1530)
+      EEPROM.write(loc, sched[i].slot1530);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1545)
+      EEPROM.write(loc, sched[i].slot1545);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1600)
+      EEPROM.write(loc, sched[i].slot1600);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1615)
+      EEPROM.write(loc, sched[i].slot1615);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1630)
+      EEPROM.write(loc, sched[i].slot1630);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1645)
+      EEPROM.write(loc, sched[i].slot1645);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1700)
+      EEPROM.write(loc, sched[i].slot1700);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1715)
+      EEPROM.write(loc, sched[i].slot1715);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1730)
+      EEPROM.write(loc, sched[i].slot1730);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1745)
+      EEPROM.write(loc, sched[i].slot1745);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1800)
+      EEPROM.write(loc, sched[i].slot1800);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1815)
+      EEPROM.write(loc, sched[i].slot1815);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1830)
+      EEPROM.write(loc, sched[i].slot1830);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1845)
+      EEPROM.write(loc, sched[i].slot1845);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1900)
+      EEPROM.write(loc, sched[i].slot1900);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1915)
+      EEPROM.write(loc, sched[i].slot1915);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1930)
+      EEPROM.write(loc, sched[i].slot1930);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot1945)
+      EEPROM.write(loc, sched[i].slot1945);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2000)
+      EEPROM.write(loc, sched[i].slot2000);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2015)
+      EEPROM.write(loc, sched[i].slot2015);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2030)
+      EEPROM.write(loc, sched[i].slot2030);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2045)
+      EEPROM.write(loc, sched[i].slot2045);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2100)
+      EEPROM.write(loc, sched[i].slot2100);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2115)
+      EEPROM.write(loc, sched[i].slot2115);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2130)
+      EEPROM.write(loc, sched[i].slot2130);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2145)
+      EEPROM.write(loc, sched[i].slot2145);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2200)
+      EEPROM.write(loc, sched[i].slot2200);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2215)
+      EEPROM.write(loc, sched[i].slot2215);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2230)
+      EEPROM.write(loc, sched[i].slot2230);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2245)
+      EEPROM.write(loc, sched[i].slot2245);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2300)
+      EEPROM.write(loc, sched[i].slot2300);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2315)
+      EEPROM.write(loc, sched[i].slot2315);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2330)
+      EEPROM.write(loc, sched[i].slot2330);
+    loc++;
+    if(EEPROM.read(loc) == sched[i].slot2345)
+      EEPROM.write(loc, sched[i].slot2345);
+    loc++;
+  }
+  SetScheduleFlag();
+}
+
+void ReadSchedFromEEPROM() {
+  unsigned int i = 0;
+  unsigned int loc = 0;
+
+  for(i = 0; i < 16; i++) {
+    loc = 0 + (i * sizeof(struct schedule));
+#ifdef _DEBUG
+    Serial.print("ReadSchedFromEEPROM(): Block read starts at ");
+    Serial.println(loc);
+#endif    
+    sched[i].slot0000 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0015 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0030 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0045 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0100 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0115 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0130 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0145 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0200 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0215 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0230 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0245 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0300 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0315 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0330 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0345 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0400 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0415 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0430 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0445 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0500 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0515 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0530 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0545 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0600 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0615 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0630 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0645 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0700 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0715 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0730 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0745 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0800 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0815 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0830 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0845 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0900 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0915 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0930 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot0945 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1000 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1015 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1030 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1045 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1100 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1115 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1130 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1145 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1200 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1215 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1230 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1245 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1300 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1315 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1330 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1345 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1400 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1415 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1430 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1445 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1500 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1515 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1530 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1545 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1600 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1615 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1630 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1645 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1700 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1715 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1730 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1745 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1800 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1815 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1830 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1845 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1900 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1915 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1930 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot1945 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2000 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2015 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2030 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2045 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2100 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2115 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2130 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2145 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2200 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2215 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2230 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2245 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2300 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2315 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2330 = EEPROM.read(loc);
+    loc++;
+    sched[i].slot2345 = EEPROM.read(loc);
+    loc++;
   }
 }
 
