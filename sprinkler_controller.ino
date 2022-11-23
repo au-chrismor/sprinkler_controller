@@ -600,293 +600,197 @@ void WriteSchedToEEPROM() {
     Serial.print("WriteSchedToEEPROM(): Block write starts at ");
     Serial.println(loc);
 #endif
-    if(EEPROM.read(loc) == sched[i].slot0000)   // Don't write if it hasn't changed!
-      EEPROM.write(loc, sched[i].slot0000);
+    EEPROM.update(loc, sched[i].slot0000);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0015)
-      EEPROM.write(loc, sched[i].slot0015);
+    EEPROM.update(loc, sched[i].slot0015);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0030)
-      EEPROM.write(loc, sched[i].slot0030);
+    EEPROM.update(loc, sched[i].slot0030);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0045)
-      EEPROM.write(loc, sched[i].slot0045);
+    EEPROM.update(loc, sched[i].slot0045);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0100)
-      EEPROM.write(loc, sched[i].slot0100);
+    EEPROM.update(loc, sched[i].slot0100);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0115)
-      EEPROM.write(loc, sched[i].slot0115);
+    EEPROM.update(loc, sched[i].slot0115);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0130)
-      EEPROM.write(loc, sched[i].slot0130);
+    EEPROM.update(loc, sched[i].slot0130);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0145)
-      EEPROM.write(loc, sched[i].slot0145);
+    EEPROM.update(loc, sched[i].slot0145);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0200)
-      EEPROM.write(loc, sched[i].slot0200);
+    EEPROM.update(loc, sched[i].slot0200);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0215)
-      EEPROM.write(loc, sched[i].slot0215);
+    EEPROM.update(loc, sched[i].slot0215);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0230)
-      EEPROM.write(loc, sched[i].slot0230);
+    EEPROM.update(loc, sched[i].slot0230);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0245)
-      EEPROM.write(loc, sched[i].slot0245);
+    EEPROM.update(loc, sched[i].slot0245);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0300)
-      EEPROM.write(loc, sched[i].slot0300);
+    EEPROM.update(loc, sched[i].slot0300);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0315)
-      EEPROM.write(loc, sched[i].slot0315);
+    EEPROM.update(loc, sched[i].slot0315);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0330)
-      EEPROM.write(loc, sched[i].slot0330);
+    EEPROM.update(loc, sched[i].slot0330);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0345)
-      EEPROM.write(loc, sched[i].slot0345);
+    EEPROM.update(loc, sched[i].slot0345);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0400)
-      EEPROM.write(loc, sched[i].slot0400);
+    EEPROM.update(loc, sched[i].slot0400);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0415)
-      EEPROM.write(loc, sched[i].slot0415);
+    EEPROM.update(loc, sched[i].slot0415);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0430)
-      EEPROM.write(loc, sched[i].slot0430);
+    EEPROM.update(loc, sched[i].slot0430);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0445)
-      EEPROM.write(loc, sched[i].slot0445);
+    EEPROM.update(loc, sched[i].slot0445);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0500)
-      EEPROM.write(loc, sched[i].slot0500);
+    EEPROM.update(loc, sched[i].slot0500);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0515)
-      EEPROM.write(loc, sched[i].slot0515);
+    EEPROM.update(loc, sched[i].slot0515);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0530)
-      EEPROM.write(loc, sched[i].slot0530);
+    EEPROM.update(loc, sched[i].slot0530);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0545)
-      EEPROM.write(loc, sched[i].slot0545);
+    EEPROM.update(loc, sched[i].slot0545);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0600)
-      EEPROM.write(loc, sched[i].slot0600);
+    EEPROM.update(loc, sched[i].slot0600);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0615)
-      EEPROM.write(loc, sched[i].slot0615);
+    EEPROM.update(loc, sched[i].slot0615);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0630)
-      EEPROM.write(loc, sched[i].slot0630);
+    EEPROM.update(loc, sched[i].slot0630);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0645)
-      EEPROM.write(loc, sched[i].slot0645);
+    EEPROM.update(loc, sched[i].slot0645);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0700)
-      EEPROM.write(loc, sched[i].slot0700);
+    EEPROM.update(loc, sched[i].slot0700);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0715)
-      EEPROM.write(loc, sched[i].slot0715);
+    EEPROM.update(loc, sched[i].slot0715);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0730)
-      EEPROM.write(loc, sched[i].slot0730);
+    EEPROM.update(loc, sched[i].slot0730);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0745)
-      EEPROM.write(loc, sched[i].slot0745);
+    EEPROM.update(loc, sched[i].slot0745);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0800)
-      EEPROM.write(loc, sched[i].slot0800);
+    EEPROM.update(loc, sched[i].slot0800);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0815)
-      EEPROM.write(loc, sched[i].slot0815);
+    EEPROM.update(loc, sched[i].slot0815);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0830)
-      EEPROM.write(loc, sched[i].slot0830);
+    EEPROM.update(loc, sched[i].slot0830);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0845)
-      EEPROM.write(loc, sched[i].slot0845);
+    EEPROM.update(loc, sched[i].slot0845);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0900)
-      EEPROM.write(loc, sched[i].slot0900);
+    EEPROM.update(loc, sched[i].slot0900);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0915)
-      EEPROM.write(loc, sched[i].slot0915);
+    EEPROM.update(loc, sched[i].slot0915);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0930)
-      EEPROM.write(loc, sched[i].slot0930);
+    EEPROM.update(loc, sched[i].slot0930);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot0945)
-      EEPROM.write(loc, sched[i].slot0945);
+    EEPROM.update(loc, sched[i].slot0945);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1000)
-      EEPROM.write(loc, sched[i].slot1000);
+    EEPROM.update(loc, sched[i].slot1000);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1015)
-      EEPROM.write(loc, sched[i].slot1015);
+    EEPROM.update(loc, sched[i].slot1015);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1030)
-      EEPROM.write(loc, sched[i].slot1030);
+    EEPROM.update(loc, sched[i].slot1030);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1045)
-      EEPROM.write(loc, sched[i].slot1045);
+    EEPROM.update(loc, sched[i].slot1045);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1100)
-      EEPROM.write(loc, sched[i].slot1100);
+    EEPROM.update(loc, sched[i].slot1100);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1115)
-      EEPROM.write(loc, sched[i].slot1115);
+    EEPROM.update(loc, sched[i].slot1115);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1130)
-      EEPROM.write(loc, sched[i].slot1130);
+    EEPROM.update(loc, sched[i].slot1130);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1145)
-      EEPROM.write(loc, sched[i].slot1145);
+    EEPROM.update(loc, sched[i].slot1145);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1200)
-      EEPROM.write(loc, sched[i].slot1200);
+    EEPROM.update(loc, sched[i].slot1200);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1215)
-      EEPROM.write(loc, sched[i].slot1215);
+    EEPROM.update(loc, sched[i].slot1215);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1230)
-      EEPROM.write(loc, sched[i].slot1230);
+    EEPROM.update(loc, sched[i].slot1230);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1245)
-      EEPROM.write(loc, sched[i].slot1245);
+    EEPROM.update(loc, sched[i].slot1245);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1300)
-      EEPROM.write(loc, sched[i].slot1300);
+    EEPROM.update(loc, sched[i].slot1300);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1315)
-      EEPROM.write(loc, sched[i].slot1315);
+    EEPROM.update(loc, sched[i].slot1315);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1330)
-      EEPROM.write(loc, sched[i].slot1330);
+    EEPROM.update(loc, sched[i].slot1330);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1345)
-      EEPROM.write(loc, sched[i].slot1345);
+    EEPROM.update(loc, sched[i].slot1345);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1400)
-      EEPROM.write(loc, sched[i].slot1400);
+    EEPROM.update(loc, sched[i].slot1400);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1415)
-      EEPROM.write(loc, sched[i].slot1415);
+    EEPROM.update(loc, sched[i].slot1415);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1430)
-      EEPROM.write(loc, sched[i].slot1430);
+    EEPROM.update(loc, sched[i].slot1430);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1445)
-      EEPROM.write(loc, sched[i].slot1445);
+    EEPROM.update(loc, sched[i].slot1445);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1500)
-      EEPROM.write(loc, sched[i].slot1500);
+    EEPROM.update(loc, sched[i].slot1500);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1515)
-      EEPROM.write(loc, sched[i].slot1515);
+    EEPROM.update(loc, sched[i].slot1515);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1530)
-      EEPROM.write(loc, sched[i].slot1530);
+    EEPROM.update(loc, sched[i].slot1530);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1545)
-      EEPROM.write(loc, sched[i].slot1545);
+    EEPROM.update(loc, sched[i].slot1545);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1600)
-      EEPROM.write(loc, sched[i].slot1600);
+    EEPROM.update(loc, sched[i].slot1600);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1615)
-      EEPROM.write(loc, sched[i].slot1615);
+    EEPROM.update(loc, sched[i].slot1615);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1630)
-      EEPROM.write(loc, sched[i].slot1630);
+    EEPROM.update(loc, sched[i].slot1630);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1645)
-      EEPROM.write(loc, sched[i].slot1645);
+    EEPROM.update(loc, sched[i].slot1645);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1700)
-      EEPROM.write(loc, sched[i].slot1700);
+    EEPROM.update(loc, sched[i].slot1700);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1715)
-      EEPROM.write(loc, sched[i].slot1715);
+    EEPROM.update(loc, sched[i].slot1715);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1730)
-      EEPROM.write(loc, sched[i].slot1730);
+    EEPROM.update(loc, sched[i].slot1730);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1745)
-      EEPROM.write(loc, sched[i].slot1745);
+    EEPROM.update(loc, sched[i].slot1745);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1800)
-      EEPROM.write(loc, sched[i].slot1800);
+    EEPROM.update(loc, sched[i].slot1800);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1815)
-      EEPROM.write(loc, sched[i].slot1815);
+    EEPROM.update(loc, sched[i].slot1815);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1830)
-      EEPROM.write(loc, sched[i].slot1830);
+    EEPROM.update(loc, sched[i].slot1830);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1845)
-      EEPROM.write(loc, sched[i].slot1845);
+    EEPROM.update(loc, sched[i].slot1845);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1900)
-      EEPROM.write(loc, sched[i].slot1900);
+    EEPROM.update(loc, sched[i].slot1900);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1915)
-      EEPROM.write(loc, sched[i].slot1915);
+    EEPROM.update(loc, sched[i].slot1915);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1930)
-      EEPROM.write(loc, sched[i].slot1930);
+    EEPROM.update(loc, sched[i].slot1930);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot1945)
-      EEPROM.write(loc, sched[i].slot1945);
+    EEPROM.update(loc, sched[i].slot1945);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2000)
-      EEPROM.write(loc, sched[i].slot2000);
+    EEPROM.update(loc, sched[i].slot2000);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2015)
-      EEPROM.write(loc, sched[i].slot2015);
+    EEPROM.update(loc, sched[i].slot2015);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2030)
-      EEPROM.write(loc, sched[i].slot2030);
+    EEPROM.update(loc, sched[i].slot2030);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2045)
-      EEPROM.write(loc, sched[i].slot2045);
+    EEPROM.update(loc, sched[i].slot2045);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2100)
-      EEPROM.write(loc, sched[i].slot2100);
+    EEPROM.update(loc, sched[i].slot2100);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2115)
-      EEPROM.write(loc, sched[i].slot2115);
+    EEPROM.update(loc, sched[i].slot2115);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2130)
-      EEPROM.write(loc, sched[i].slot2130);
+    EEPROM.update(loc, sched[i].slot2130);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2145)
-      EEPROM.write(loc, sched[i].slot2145);
+    EEPROM.update(loc, sched[i].slot2145);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2200)
-      EEPROM.write(loc, sched[i].slot2200);
+    EEPROM.update(loc, sched[i].slot2200);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2215)
-      EEPROM.write(loc, sched[i].slot2215);
+    EEPROM.update(loc, sched[i].slot2215);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2230)
-      EEPROM.write(loc, sched[i].slot2230);
+    EEPROM.update(loc, sched[i].slot2230);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2245)
-      EEPROM.write(loc, sched[i].slot2245);
+    EEPROM.update(loc, sched[i].slot2245);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2300)
-      EEPROM.write(loc, sched[i].slot2300);
+    EEPROM.update(loc, sched[i].slot2300);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2315)
-      EEPROM.write(loc, sched[i].slot2315);
+    EEPROM.update(loc, sched[i].slot2315);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2330)
-      EEPROM.write(loc, sched[i].slot2330);
+    EEPROM.update(loc, sched[i].slot2330);
     loc++;
-    if(EEPROM.read(loc) == sched[i].slot2345)
-      EEPROM.write(loc, sched[i].slot2345);
+    EEPROM.update(loc, sched[i].slot2345);
     loc++;
   }
   SetScheduleFlag();
