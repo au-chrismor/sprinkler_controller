@@ -3,6 +3,7 @@
 #include <EthernetUdp.h>
 #include <EEPROM.h>
 #include <MQTT.h>
+#include <ArduinoJson.h>
 
 #include "config.h"
 #include "schedule.h"
@@ -12,11 +13,13 @@ EthernetUDP Udp;
 MQTTClient mqtt;
 
 struct schedule sched[16];
+unsigned char output_states[16];
 byte packetBuffer[NTP_PACKET_SIZE]; //buffer to hold incoming and outgoing packets
 
 
 unsigned long lastMillis = 0;
 unsigned char ScheduleFlag = 0;
+unsigned long epoch = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -112,6 +115,25 @@ void setup() {
   digitalWrite(RLY14, RELAY_OFF);
   pinMode(RLY15, OUTPUT);
   digitalWrite(RLY15, RELAY_OFF);
+  /*
+   * The following is to dummy up a schedule for testing purposes
+   sched[0].slot0600 = 0x7F;
+   sched[1].slot0600 = 0x7F;
+   sched[2].slot0600 = 0x7F;
+   sched[3].slot0600 = 0x7F;
+   sched[4].slot0600 = 0x7F;
+   sched[5].slot0600 = 0x7F;
+   sched[6].slot0600 = 0x7F;
+   sched[7].slot0600 = 0x7F;
+   sched[8].slot0600 = 0x7F;
+   sched[9].slot0600 = 0x7F;
+   sched[10].slot0600 = 0x7F;
+   sched[11].slot0600 = 0x7F;
+   sched[12].slot0600 = 0x7F;
+   sched[13].slot0600 = 0x7F;
+   sched[14].slot0600 = 0x7F;
+   sched[15].slot0600 = 0x7F;
+   */
 }
 
 void loop() {
@@ -140,9 +162,34 @@ void loop() {
 
   CheckSchedule();
 
-  if(millis() - lastMillis > 60000) { // Approx 1 minute
+  if(millis() - lastMillis > 59000) { // Approx 1 minute
     lastMillis = millis();
-    mqtt.publish("/status", "hello");
+    StaticJsonDocument<200> doc;
+    doc["controller_id"] = MY_ID;
+    doc["timestamp"] = epoch;
+    doc["channel_00"] = output_states[0];
+    doc["channel_01"] = output_states[1];
+    doc["channel_02"] = output_states[2];
+    doc["channel_03"] = output_states[3];
+    doc["channel_04"] = output_states[4];
+    doc["channel_05"] = output_states[5];
+    doc["channel_06"] = output_states[6];
+    doc["channel_07"] = output_states[7];
+    doc["channel_08"] = output_states[8];
+    doc["channel_09"] = output_states[9];
+    doc["channel_10"] = output_states[10];
+    doc["channel_11"] = output_states[11];
+    doc["channel_12"] = output_states[12];
+    doc["channel_13"] = output_states[13];
+    doc["channel_14"] = output_states[14];
+    doc["channel_15"] = output_states[15];
+    char jsonBuffer[512];
+    serializeJson(doc, jsonBuffer);
+#ifdef _DEBUG    
+    Serial.print("loop(): Payload = ");
+    Serial.println(jsonBuffer);
+#endif    
+    mqtt.publish("/status", jsonBuffer);
 #ifdef _DEBUG
     Serial.println("Publish");
 #endif    
@@ -196,7 +243,7 @@ void CheckSchedule() {
 #ifdef _DEBUG
   Serial.println("In CheckSchedule");
 #endif
-  unsigned long epoch = CheckTime();
+  epoch = CheckTime();
   if(epoch != 0) {
     unsigned hours = (epoch  % 86400L) / 3600;
     unsigned long minutes = (epoch % 3600) / 60;
@@ -206,7 +253,7 @@ void CheckSchedule() {
       
 #endif
     if((minutes == 45) || (minutes == 30) || (minutes == 15) || (minutes == 0)) {
-      if(hours = 0) {
+      if(hours == 0 && minutes == 0) {
         WriteSchedToEEPROM();
       }
 #ifdef _DEBUG
@@ -581,6 +628,7 @@ void CheckSchedule() {
       Serial.print("]= 0x");
       Serial.println(ControlSegment, HEX);
 #endif  
+      output_states[i] = ControlSegment;
       }
     }
 #ifdef _DEBUG
@@ -602,6 +650,7 @@ void WriteSchedToEEPROM() {
 #endif
     EEPROM.put(loc, sched[i]);
   }
+  SetScheduleFlag();
 }
 
 /*
@@ -1035,7 +1084,7 @@ void ReadSchedFromEEPROM() {
 
 unsigned long CheckTime() {
   const unsigned long seventyYears = 2208988800UL;
-  unsigned long epoch = 0L;
+  epoch = 0L;
   
   sendNTPpacket(NTP_HOST); // send an NTP packet to a time server
   delay(1000); // wait for a reply
