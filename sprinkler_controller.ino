@@ -22,6 +22,7 @@ unsigned char ScheduleFlag = 0;
 unsigned long epoch = 0;
 
 void setup() {
+  digitalWrite(LED_BUILTIN, HIGH);
   Serial.begin(115200);
   while(!Serial){
     ;
@@ -83,6 +84,7 @@ void setup() {
   connect();
 
   Serial.println("I/O Startup");
+  pinMode(LED_BUILTIN, OUTPUT);
   pinMode(RLY00, OUTPUT);
   digitalWrite(RLY00, RELAY_OFF);
   pinMode(RLY01, OUTPUT);
@@ -117,6 +119,7 @@ void setup() {
   digitalWrite(RLY15, RELAY_OFF);
   /*
    * The following is to dummy up a schedule for testing purposes
+   */
    sched[0].slot0600 = 0x7F;
    sched[1].slot0600 = 0x7F;
    sched[2].slot0600 = 0x7F;
@@ -133,7 +136,27 @@ void setup() {
    sched[13].slot0600 = 0x7F;
    sched[14].slot0600 = 0x7F;
    sched[15].slot0600 = 0x7F;
-   */
+   sched[0].slot0215 = 0x7F;
+   sched[1].slot0215 = 0x7F;
+   sched[2].slot0215 = 0x7F;
+   sched[3].slot0215 = 0x7F;
+   sched[4].slot0215 = 0x7F;
+   sched[5].slot0215 = 0x7F;
+   sched[6].slot0215 = 0x7F;
+   sched[7].slot0215 = 0x7F;
+   sched[8].slot0215 = 0x7F;
+   sched[9].slot0215 = 0x7F;
+   sched[10].slot0215 = 0x7F;
+   sched[11].slot0215 = 0x7F;
+   sched[12].slot0215 = 0x7F;
+   sched[13].slot0215 = 0x7F;
+   sched[14].slot0215 = 0x7F;
+   sched[15].slot0215  = 0x7F;
+
+#ifdef _DEBUG
+    DumpSchedule();
+#endif
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 void loop() {
@@ -160,7 +183,9 @@ void loop() {
     connect();
   }
 
+  digitalWrite(LED_BUILTIN, HIGH);
   CheckSchedule();
+  digitalWrite(LED_BUILTIN, LOW);
 
   if(millis() - lastMillis > 59000) { // Approx 1 minute
     lastMillis = millis();
@@ -237,6 +262,9 @@ void ZeroEEPROM() {
 }
 
 void CheckSchedule() {
+#ifdef _DEBUG
+  int j = 0;
+#endif
   unsigned char ControlSegment = 0xFF;
   int i = 0;
   
@@ -258,6 +286,7 @@ void CheckSchedule() {
       }
 #ifdef _DEBUG
       Serial.println("Time to run a schedule");
+      DumpSchedule();
 #endif
     for(i = 0; i < 16; i++) {
         switch(hours) {
@@ -1139,3 +1168,586 @@ void sendNTPpacket(const char * address) {
   Udp.write(packetBuffer, NTP_PACKET_SIZE);
   Udp.endPacket();
 }
+
+#ifdef _DEBUG
+  void DumpSchedule() {
+      int j;
+      
+      Serial.print("0000: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0000, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0015: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0015, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0030: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0030, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0045: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0045, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0100: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0100, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0115: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0115, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0130: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0130, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0145: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0145, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0200: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0200, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0215: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0215, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0230: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0230, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0245: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0245, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0300: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0300, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0315: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0315, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0330: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0330, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0345: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0345, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0400: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0400, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0415: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0415, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0430: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0430, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0445: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0445, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0500: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0500, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0515: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0515, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0530: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0530, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0545: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0545, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0600: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0600, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0615: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0615, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0630: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0630, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0645: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0645, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0700: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0700, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0715: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0715, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0730: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0730, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0745: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0745, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0800: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0800, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0815: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0815, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0830: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0830, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0845: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0845, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0900: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0900, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0915: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0915, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0930: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0930, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("0945: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot0945, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1000: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1000, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1015: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1015, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1030: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1030, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1045: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1045, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1100: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1100, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1115: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1115, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1130: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1130, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1145: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1145, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1200: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1200, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1215: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1215, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1230: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1230, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1245: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1245, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1300: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1300, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1315: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1315, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1330: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1330, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1345: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1345, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1400: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1400, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1415: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1415, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1430: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1430, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1445: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1445, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1500: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1500, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1515: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1515, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1530: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1530, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1545: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1545, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1600: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1600, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1615: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1615, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1630: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1630, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1645: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1645, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1700: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1700, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1715: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1715, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1730: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1730, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1745: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1745, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1800: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1800, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1815: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1815, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1830: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1830, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1845: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1845, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1900: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1900, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1915: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1915, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1930: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1930, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("1945: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot1945, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2000: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2000, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2015: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2015, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2030: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2030, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2045: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2045, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2100: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2100, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2115: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2115, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2130: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2130, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2145: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2145, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2200: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2200, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2215: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2215, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2230: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2230, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2245: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2245, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2300: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2300, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2315: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2315, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2330: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2330, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print("2345: ");
+      for(j = 0; j < 16; j++) {
+        Serial.print(sched[j].slot2345, HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+  }
+#endif
